@@ -1,0 +1,28 @@
+<!-- views/index.ejs -->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <%- include ("partials/header") %>
+    <title><%= clinicName %> - 診所管理系統</title>
+  </head>
+  <body>
+    <%- include ("partials/nav") %>
+    <header>
+      <h1><%= clinicName %></h1>
+      <p>診所地址： <%= clinicAddress %></p>
+      <p>聯繫電話： <%= clinicPhone %></p>
+    </header>
+
+    <main>
+      <h2>歡迎來到診所管理系統</h2>
+      <p>這裡是診所的基本資訊和快捷連結。</p>
+    </main>
+
+    <footer>
+      <p>
+        &copy; <%= new Date().getFullYear() %> <%= clinicName %> 診所. All
+        rights reserved.
+      </p>
+    </footer>
+  </body>
+</html>

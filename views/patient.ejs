@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <%- include ("partials/header") %>
+    <title>Clinic Management System</title>
+    <link rel="stylesheet" type="text/css" href="/styles.css" />
+  </head>
+  <body>
+    <%- include ("partials/nav") %>
+    <h1>Patients List</h1>
+    <a href="/create">Add New Patient</a>
+    <table>
+      <tr>
+        <th>Name</th>
+        <th>Age</th>
+        <th>Address</th>
+        <th>Phone</th>
+        <th>Actions</th>
+      </tr>
+      <% patients.forEach(patient => { %>
+      <tr>
+        <td><%= patient.name %></td>
+        <td><%= patient.age %></td>
+        <td><%= patient.address %></td>
+        <td><%= patient.phone %></td>
+        <td>
+          <a href="/edit/<%= patient.id %>">Edit</a>
+          <form
+            action="/delete/<%= patient.id %>"
+            method="post"
+            style="display: inline"
+          >
+            <button type="submit">Delete</button>
+          </form>
+        </td>
+      </tr>
+      <% }) %>
+    </table>
+  </body>
+</html>

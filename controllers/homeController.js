@@ -1,0 +1,13 @@
+exports.getHomePage = (req, res) => {
+  // 這裡可以提供一些首頁所需的資料
+  const clinicName = "大名診所";
+  const clinicAddress = "Champs-Élysées";
+  const clinicPhone = "0988888888";
+
+  res.render("index", {
+    user: req.user,
+    clinicName,
+    clinicAddress,
+    clinicPhone,
+  });
+};
