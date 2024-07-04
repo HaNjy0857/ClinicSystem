@@ -30,21 +30,25 @@ passport.use(
       console.log("進入Google Strategy的區域");
       console.log(profile);
       console.log("======================");
-      let foundUser = await User.findOne({ googleID: profile.id }).exec();
-      if (foundUser) {
-        console.log("User registered!! No need to save to DB");
-        done(null, foundUser);
-      } else {
-        console.log("User need register!! Need to save to DB");
-        let newUser = new User({
-          name: profile.displayName,
-          googleID: profile.id,
-          thumbnail: profile.photo[0].value,
-          email: profile.email[0].value,
-        });
-        let savedUser = await newUser.save();
-        console.log("Create new member successfully~~");
-        done(null, savedUser);
+
+      try {
+        let foundUser = await User.findOne({ where: { googleID: profile.id } });
+        if (foundUser) {
+          console.log("User registered!! No need to save to DB");
+          done(null, foundUser);
+        } else {
+          console.log("User need register!! Need to save to DB");
+          let newUser = await User.create({
+            name: profile.displayName,
+            googleID: profile.id,
+            thumbnail: profile.photos[0].value,
+            email: profile.emails[0].value,
+          });
+          console.log("Create new member successfully~~");
+          done(null, newUser);
+        }
+      } catch (err) {
+        done(err);
       }
     }
   )

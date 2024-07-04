@@ -51,6 +51,7 @@ exports.getSignup = (req, res) => {
 };
 
 exports.getGoogleAuth = (req, res) => {
+  console.log("getGoogleAuth");
   passport.authenticate("google", {
     scope: ["profile", "email"],
     prompt: "select_account",
@@ -65,7 +66,6 @@ exports.postSignup = async (req, res) => {
   }
 
   try {
-    //確認信箱是否被註冊過
     const foundEmail = await User.findOne({ where: { email } });
     if (foundEmail) {
       req.flash(
@@ -75,7 +75,6 @@ exports.postSignup = async (req, res) => {
       return res.redirect("/auth/signup");
     }
 
-    // 使用 bcrypt 加密密碼
     let hashedPassword = await bcrypt.hash(password, 12);
     await User.create({ name, email, password: hashedPassword });
 
@@ -91,7 +90,27 @@ exports.postSignup = async (req, res) => {
   }
 };
 
-exports.getGoogleRedirect = passport.authenticate("google", {
-  successRedirect: "/profile",
-  failureRedirect: "/auth/login",
-});
+// exports.getGoogleRedirect = passport.authenticate("google", {
+//   successRedirect: "/",
+//   failureRedirect: "/auth/login",
+// });
+exports.getGoogleRedirect = (req, res, next) => {
+  passport.authenticate("google", (err, user, info) => {
+    if (err) {
+      console.error("Authentication error:", err);
+      return next(err);
+    }
+    if (!user) {
+      console.log("No user found:", info);
+      return res.redirect("/auth/login");
+    }
+    req.logIn(user, (err) => {
+      if (err) {
+        console.error("Login error:", err);
+        return next(err);
+      }
+      console.log("Google authentication successful");
+      return res.redirect("/");
+    });
+  })(req, res, next);
+};

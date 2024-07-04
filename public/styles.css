@@ -50,6 +50,11 @@ td {
 
 form {
   margin-top: 20px;
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+  border: none;
+  text-align: center;
 }
 
 label {
@@ -78,6 +83,18 @@ button {
 
 button:hover {
   background-color: #0056b3;
+}
+
+button.delete-btn {
+  background-color: #dc3545;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 4px;
+}
+
+button.delete-btn:hover {
+  background-color: #c82333;
 }
 
 .error {

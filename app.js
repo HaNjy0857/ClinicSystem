@@ -3,16 +3,14 @@ const session = require("express-session");
 require("./config/passport");
 const passport = require("passport");
 const sequelize = require("./config/database");
-const patientRoutes = require("./routes/patients");
-const authRoutes = require("./routes/auth-routes");
+const patientRoutes = require("./routes/patient");
+const authRoutes = require("./routes/auth");
 const homeController = require("./controllers/homeController");
 const flash = require("connect-flash");
+const path = require("path");
 
 const app = express();
 const port = 9527;
-
-const appointmentsRouter = require("./routes/appointments");
-const patientsRouter = require("./routes/patients");
 
 app.set("view engine", "ejs");
 app.use(express.json());
@@ -36,10 +34,11 @@ app.use((req, res, next) => {
   next();
 });
 
-// app.use("/", patientRoutes);
-app.get("/", homeController.getHomePage);
+app.use(express.static(path.join(__dirname, "public")));
 
+app.get("/", homeController.getHomePage);
 app.use("/auth", authRoutes);
+app.use("/patient", patientRoutes);
 
 sequelize
   .sync()

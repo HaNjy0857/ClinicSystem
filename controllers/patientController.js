@@ -3,28 +3,33 @@ const Patient = require("../models/patient");
 exports.getPatients = async (req, res) => {
   try {
     const patients = await Patient.findAll();
-    res.render("patients", { patients });
+    res.render("patient", { user: req.user, patients });
   } catch (error) {
     res.status(500).send(error);
   }
 };
 
+exports.showCreateForm = (req, res) => {
+  res.render("patientDetail", { user: req.user, mode: "create" });
+};
+
 exports.createPatient = async (req, res) => {
   try {
+    console.log("createPatientING!!!");
     await Patient.create(req.body);
-    res.redirect("/patients");
+    res.redirect("/patient");
   } catch (error) {
     res.status(400).send(error);
   }
 };
 
-exports.editPatient = async (req, res) => {
+exports.showEditForm = async (req, res) => {
   try {
     const patient = await Patient.findByPk(req.params.id);
     if (!patient) {
-      return res.status(404).send();
+      return res.status(404).send("Patient not found");
     }
-    res.render("editPatient", { patient });
+    res.render("patientDetail", { user: req.user, patient, mode: "edit" });
   } catch (error) {
     res.status(500).send(error);
   }
@@ -37,8 +42,21 @@ exports.updatePatient = async (req, res) => {
       return res.status(404).send();
     }
     await patient.update(req.body);
-    res.redirect("/patients");
+    res.redirect("/patient");
   } catch (error) {
     res.status(400).send(error);
+  }
+};
+
+exports.deletePatient = async (req, res) => {
+  try {
+    const patient = await Patient.findByPk(req.params.id);
+    if (!patient) {
+      return res.status(404).send("Patient not found");
+    }
+    await patient.destroy();
+    res.redirect("/patient");
+  } catch (error) {
+    res.status(500).send(error);
   }
 };

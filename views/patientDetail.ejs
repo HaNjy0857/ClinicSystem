@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <%- include("partials/header") %>
+    <title><%= mode === 'create' ? 'Create Patient' : 'Edit Patient' %></title>
+    <link rel="stylesheet" type="text/css" href="/styles.css" />
+  </head>
+  <body>
+    <%- include("partials/nav") %>
+    <h1><%= mode === 'create' ? 'Create Patient' : 'Edit Patient' %></h1>
+    <form
+      action="/patient/<%= mode === 'create' ? 'create' : 'edit/' + patient.id %>"
+      method="post"
+    >
+      <!-- 姓名 -->
+      <label for="name">Name:</label>
+      <br />
+      <input
+        type="text"
+        id="name"
+        name="name"
+        value="<%= mode === 'edit' ? patient.name : '' %>"
+        required
+      />
+      <br />
+      <!-- 年齡 -->
+      <label for="age">Age:</label>
+      <br />
+      <input
+        type="number"
+        id="age"
+        name="age"
+        value="<%= mode === 'edit' ? patient.age : '' %>"
+        required
+      />
+      <br />
+      <!-- 住址 -->
+      <label for="address">Address:</label>
+      <br />
+      <input
+        type="text"
+        id="address"
+        name="address"
+        value="<%= mode === 'edit' ? patient.address : '' %>"
+        required
+      />
+      <br />
+      <!-- 電話 -->
+      <label for="phone">Phone:</label>
+      <br />
+      <input
+        type="text"
+        id="phone"
+        name="phone"
+        value="<%= mode === 'edit' ? patient.phone : '' %>"
+        required
+      />
+      <br />
+      <!-- 提交按鈕 -->
+      <button type="submit">
+        <%= mode === 'create' ? 'Create Patient' : 'Update Patient' %>
+      </button>
+    </form>
+  </body>
+</html>

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
     <%- include ("partials/header") %>
     <title>Clinic Management System</title>
@@ -8,7 +8,9 @@
   <body>
     <%- include ("partials/nav") %>
     <h1>Patients List</h1>
-    <a href="/create">Add New Patient</a>
+    <form action="/patient/create" method="get">
+      <button type="submit">Add New Patient</button>
+    </form>
     <table>
       <tr>
         <th>Name</th>
@@ -24,13 +26,22 @@
         <td><%= patient.address %></td>
         <td><%= patient.phone %></td>
         <td>
-          <a href="/edit/<%= patient.id %>">Edit</a>
           <form
-            action="/delete/<%= patient.id %>"
+            action="/patient/edit/<%= patient.id %>"
+            method="get"
+            style="display: inline"
+          >
+            <button type="submit">Edit</button>
+          </form>
+
+          <form
+            action="/patient/delete/<%= patient.id %>"
             method="post"
             style="display: inline"
           >
-            <button type="submit">Delete</button>
+            <button type="submit" class="delete-btn" style="display: inline">
+              Delete
+            </button>
           </form>
         </td>
       </tr>
