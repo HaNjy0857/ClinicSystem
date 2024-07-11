@@ -6,21 +6,21 @@ const Patient = sequelize.define("Patient", {
     type: DataTypes.STRING,
     allowNull: false,
     validate: {
-      len: [3, 255], // 可以根据需求调整
+      len: [3, 255],
     },
   },
   age: {
     type: DataTypes.INTEGER,
     allowNull: false,
     validate: {
-      min: 0, // 可以根据需求调整
+      min: 0,
     },
   },
   address: {
     type: DataTypes.STRING,
     allowNull: false,
     validate: {
-      len: [10, 255], // 可以根据需求调整
+      len: [10, 255],
     },
   },
   phone: {

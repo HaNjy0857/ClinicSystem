@@ -34,11 +34,6 @@ exports.postLogin = (req, res, next) => {
   })(req, res, next);
 };
 
-// exports.postLogin = passport.authenticate("local", {
-//   failureRedirect: "/auth/login",
-//   failureFlash: "Login failed! Incorrect username or password.",
-// });
-
 exports.getLogout = (req, res) => {
   req.logOut((err) => {
     if (err) return res.send(err);
@@ -90,10 +85,6 @@ exports.postSignup = async (req, res) => {
   }
 };
 
-// exports.getGoogleRedirect = passport.authenticate("google", {
-//   successRedirect: "/",
-//   failureRedirect: "/auth/login",
-// });
 exports.getGoogleRedirect = (req, res, next) => {
   passport.authenticate("google", (err, user, info) => {
     if (err) {

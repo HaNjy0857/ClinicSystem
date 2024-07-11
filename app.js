@@ -41,7 +41,6 @@ app.use("/auth", authRoutes);
 app.use("/patient", patientRoutes);
 
 if (require.main === module) {
-  // 如果是直接运行该文件，启动服务器
   sequelize
     .sync()
     .then(() => {
@@ -53,6 +52,5 @@ if (require.main === module) {
       console.error("Unable to connect to the database:", err);
     });
 } else {
-  // 如果是作为模块引入（例如在测试中），仅导出 app 实例
   module.exports = app;
 }

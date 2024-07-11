@@ -1,5 +1,4 @@
 exports.getHomePage = (req, res) => {
-  // 這裡可以提供一些首頁所需的資料
   const clinicName = "有間診所";
   const clinicAddress = "Champs-Élysées";
   const clinicPhone = "0988888888";

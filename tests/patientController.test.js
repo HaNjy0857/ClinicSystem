@@ -1,5 +1,5 @@
 const request = require("supertest");
-const app = require("../app"); // 正確引入你的 Express 應用實例
+const app = require("../app");
 const sequelize = require("../config/database");
 const User = require("../models/user");
 const bcrypt = require("bcrypt");
@@ -7,7 +7,7 @@ const bcrypt = require("bcrypt");
 describe("GET /patient", () => {
   beforeAll(async () => {
     await sequelize.authenticate();
-    await sequelize.sync({ force: true }); // 重新建立資料庫結構
+    await sequelize.sync({ force: true });
     await User.create({
       name: "Test User",
       email: "Mikey1234@gmail.com",
@@ -22,7 +22,7 @@ describe("GET /patient", () => {
   test("應返回 302 重定向當未認證時", async () => {
     const response = await request(app).get("/patient");
     expect(response.status).toBe(302);
-    expect(response.headers.location).toBe("/auth/login"); // 假設重定向到登入頁面
+    expect(response.headers.location).toBe("/auth/login");
   });
 
   test("應返回 200 OK 當認證通過時", async () => {
@@ -31,7 +31,7 @@ describe("GET /patient", () => {
       .post("/auth/login")
       .send({ email: "Mikey1234@gmail.com", password: "Mikey1234" });
 
-    const cookies = loginResponse.headers["set-cookie"]; // 獲取登入後的 cookies
+    const cookies = loginResponse.headers["set-cookie"];
 
     console.log("當認證通過時的cookies : ", cookies);
     // 使用登入後的 cookies 進行請求
